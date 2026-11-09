@@ -20,6 +20,7 @@ int main() {
   std::cout << m << std::endl << std::endl;
 
   /* Create a matrix m2 that is a symmetrized version of m */
+  MatrixXd m2 = 0.5 * (m + m.transpose());
   
     
   std::cout << m2 << std::endl << std::endl;
