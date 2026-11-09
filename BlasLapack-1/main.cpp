@@ -20,6 +20,7 @@ int main(void)
 
   
     /* Compute 8.2*a+b here */
+    cblas_saxpy(5, 8.2f, a, 1, b, 1);
 
 
     /* Code below is for testing only */

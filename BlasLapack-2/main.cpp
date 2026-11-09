@@ -20,6 +20,7 @@ int main(void)
 
   
     /* Double values of a[0], a[2], a[4], a[6], and a[8] using dscal */
+    cblas_dscal(5, 2.0, a, 2);
 
   
     /* Code below is for testing only */
