@@ -1,13 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-set -eux
+exercise_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repo_dir="$(cd "$exercise_dir/.." && pwd)"
+temp_dir="$(mktemp -d)"
+trap 'rm -r "$temp_dir"' EXIT
 
-g++ -std=c++17 -Wall -pedantic main.cpp -I ./cblas -lcblas -o main
-
-read -r test_output < <(./main)
-if [[ "$test_output" == "6.12 33.16 68.14 -67.84 31.78" ]]
-then
-    exit 0
-else
-    exit 1
-fi
+"${CXX:-g++}" -std=c++17 -Wall -Wextra -pedantic \
+  "$exercise_dir/main.cpp" -I"$exercise_dir/cblas" -o "$temp_dir/main" \
+  "${BLAS_LIB:--lopenblas}"
+"$temp_dir/main" > "$temp_dir/output"
+python3 "$repo_dir/tests/check_blas.py" "$temp_dir/output" 6.12 33.16 68.14 -67.84 31.78
+echo "SUCCESS"

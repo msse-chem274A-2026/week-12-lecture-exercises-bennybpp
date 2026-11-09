@@ -25,10 +25,9 @@ int main() {
   std::cout << m2 << std::endl << std::endl;
 
   /* Testing code below */
-  assert(m2(0, 0) == m(0, 0));
-  assert(m2(0, 0) == m(0, 0));
-  assert(m2(1, 0) == m2(0, 1));
-  assert(m2(2, 0) == m2(0, 2));
-  assert(m2(2, 3) == m2(3, 2));
+  MatrixXd expected = 0.5 * (m + m.transpose());
+  assert(m2.rows() == m.rows() && m2.cols() == m.cols());
+  assert(m2.isApprox(expected, 1e-12));
+  assert(m2.isApprox(m2.transpose(), 1e-12));
   std::cout << "All ok!" << std::endl;
-} 
+}
